@@ -3,6 +3,7 @@ import random
 
 pygame.init()
 
+clock = pygame.time.Clock()
 window = pygame.display.set_mode([500, 500])
 pygame.display.set_caption('Ābolu rījējs')
 
@@ -104,3 +105,4 @@ while is_running:
         
     
     render(snake, apple)
+    clock.tick(15)
