@@ -14,13 +14,17 @@ class Snake:
     def __init__(self, x, y):
         """init metodē apraksta objekta īpašības jeb atribūtus"""
         self.length = 1
-        self.x = x
-        self.y = y
-        self.rectangles = [pygame.Rect(self.x, self.y, 20, 20)]
+        self.x_change = 0
+        self.y_change = 0
+        self.rectangles = [pygame.Rect(x, y, 20, 20)]
 
     def move(self):
+        x = self.rectangles[-1].left
+        y = self.rectangles[-1].top
+        
         self.rectangles.append(
-            pygame.Rect(self.x, self.y, 20, 20)
+            pygame.Rect(x + self.x_change, y + self.y_change,
+                        20, 20)
         )
         if len(self.rectangles) > self.length:
             self.rectangles.pop(0) 
@@ -79,15 +83,19 @@ while is_running:
             
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                snake.y -= 20
+                snake.x_change = 0
+                snake.y_change = -20
             if event.key == pygame.K_a:
-                snake.x -= 20
+                snake.x_change = -20
+                snake.y_change = 0
             if event.key == pygame.K_s:
-                snake.y += 20
+                snake.x_change = 0
+                snake.y_change = 20
             if event.key == pygame.K_d:
-                snake.x += 20
+                snake.x_change = 20
+                snake.y_change = 0
                 
-            snake.move()
+    snake.move()
             
     if apple.is_eaten(snake):
         snake.length += 1
