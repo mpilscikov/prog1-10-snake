@@ -17,20 +17,43 @@ class Snake:
         self.y = y
         self.rectangles = [pygame.Rect(self.x, self.y, 20, 20)]
 
-    
     def move(self):
         self.rectangles.append(
             pygame.Rect(self.x, self.y, 20, 20)
         )
         if len(self.rectangles) > self.length:
-            self.rectangles.pop(0)
-            
+            self.rectangles.pop(0) 
 
     def draw(self, window):
         pygame.draw.rect(window, [0, 125, 0], self.rectangles[-1])
     
         for rectangle in self.rectangles[:-1]:
-            pygame.draw.rect(window, [13, 55, 13], rectangle)    
+            pygame.draw.rect(window, [13, 55, 13], rectangle)
+            
+            
+class Apple:
+    
+    size = 15
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        
+    def is_eaten(self, snake):
+        apple_rect = pygame.Rect(
+            self.x, self.y,
+            Apple.size, Apple.size
+        )
+        
+        return apple_rect.colliderect(snake.rectangles[-1])
+    
+    def draw(self, window):
+        apple_rect = pygame.Rect(
+            self.x, self.y,
+            Apple.size, Apple.size
+        )
+        
+        pygame.draw.rect(window, [255, 0, 0], apple_rect)
 
 
 def render(snake):
