@@ -33,6 +33,13 @@ class Snake:
     def is_out_of_bounds(self, window):
         window_rect = window.get_rect()
         return not window_rect.contains(self.rectangles[-1])
+    
+    def is_crossing_itself(self):
+        if snake.rectangles[-1].collidelist(snake.rectangles[:-1]) == -1:
+            return False
+        
+        return True
+    
 
     def draw(self, window):
         pygame.draw.rect(window, [0, 125, 0], self.rectangles[-1])
@@ -107,7 +114,7 @@ while is_running:
         apple.x = random.randint(0, 485)
         apple.y = random.randint(0, 485)
         
-    if snake.is_out_of_bounds(window):
+    if snake.is_out_of_bounds(window) or snake.is_crossing_itself():
         pygame.quit()
     
     render(snake, apple)
